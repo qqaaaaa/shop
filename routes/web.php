@@ -20,6 +20,7 @@ Route::get('user', 'NewsController@user');
 Route::post('loGin', 'NewsController@loGin');
 //菜单列表
 Route::any('menuList', 'NewsController@menuList');
+
 Route::any('test','AdminController@index');
 Route::any('doAddAdmin','AdminController@doAddAdmin');
 Route::any('addAdmin','AdminController@addAdmin');
@@ -31,6 +32,7 @@ Route::any('addRole','AdminController@addRole');
 Route::any('doAddRole','AdminController@doAddRole');
 Route::any('roleList','AdminController@roleList');
 Route::any('delRole','AdminController@delRole');
+
 Route::any('property','IndexController@property');
 Route::any('propertyAdd','IndexController@propertyAdd');
 Route::any('propertyAddok','IndexController@propertyAddok');
@@ -43,8 +45,8 @@ Route::any('classifyUpd','IndexController@classifyUpd');
 Route::any('classifyUpdok','IndexController@classifyUpdok');
 Route::any('classifyDel','IndexController@classifyDel');
 Route::any('propertyDel','IndexController@propertyDel');
-Route::any('/index','ShoporderController@index');
 
+Route::any('/index','ShoporderController@index');
 Route::any('/search_order_number','ShoporderController@search_order_number');
 Route::any('/trade_status','ShoporderController@trade_status');
 Route::any('/trade_status_input','ShoporderController@trade_status_input');

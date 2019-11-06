@@ -1,14 +1,16 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Admin;
 use App\Models\Role;
 use App\Models\RolePower;
 use App\Models\Power;
+
 Class AdminController{
 
     public function index(){
-        $res = Admin::with('role')->get()->toArray();
-        var_dump($res);
+//       
     }
     //渲染添加页面
     public function addAdmin(){
