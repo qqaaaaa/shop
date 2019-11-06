@@ -14,3 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::any('test','AdminController@index');
+Route::any('doAddAdmin','AdminController@doAddAdmin');
+Route::any('addAdmin','AdminController@addAdmin');
+Route::any('adminList','AdminController@adminList');
+Route::any('delAdmin','AdminController@delAdmin');
+Route::any('updAdmin','AdminController@updAdmin');
+Route::any('doUpdAdmin','AdminController@doUpdAdmin');
+Route::any('addRole','AdminController@addRole');
+Route::any('doAddRole','AdminController@doAddRole');
+Route::any('roleList','AdminController@roleList');
+Route::any('delRole','AdminController@delRole');
