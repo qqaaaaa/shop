@@ -43,3 +43,12 @@ Route::any('classifyUpd','IndexController@classifyUpd');
 Route::any('classifyUpdok','IndexController@classifyUpdok');
 Route::any('classifyDel','IndexController@classifyDel');
 Route::any('propertyDel','IndexController@propertyDel');
+Route::any('/index','ShoporderController@index');
+
+Route::any('/search_order_number','ShoporderController@search_order_number');
+Route::any('/trade_status','ShoporderController@trade_status');
+Route::any('/trade_status_input','ShoporderController@trade_status_input');
+Route::any('/addressUpdate','ShoporderController@addressUpdate');
+Route::any('/updateselect','ShoporderController@updateselect');
+Route::any('/trade_user','ShoporderController@trade_user');
+Route::any('/nameUpdate','ShoporderController@nameUpdate');
