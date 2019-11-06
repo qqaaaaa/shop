@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//渲染登录页面
+Route::get('user', 'NewsController@user');
+//登录验证
+Route::post('loGin', 'NewsController@loGin');
+//菜单列表
+Route::any('menuList', 'NewsController@menuList');
