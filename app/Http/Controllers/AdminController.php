@@ -1,13 +1,16 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Admin;
 use App\Models\Role;
 use App\Models\RolePower;
 use App\Models\Power;
+
 Class AdminController{
 
     public function index(){
-        $res = Admin::with('role')->get()->toArray();
+        $res = Admin::with(['role'=>function($rolepower){$rolepower->with(['rolepower'=>function($power){$power->with(['power']);}]);}])->where('r_id',1)->get()->toArray();
         var_dump($res);
     }
     //渲染添加页面
@@ -17,9 +20,14 @@ Class AdminController{
     //添加的方法
     public function doAddAdmin(){
         $name = $_POST['name'];
+        //验证管理员的唯一性
+        $only = Admin::where('name',"$name")->get()->toArray();
+        if(!empty($only)){
+            echo "<script>alert('管理员已存在！');location.href='addAdmin'</script>";die;
+        }
         $pwd = $_POST['pwd'];
         $time = time()+90*24*60*60;
-        $data = ['name'=>$name,'pwd'=>$pwd,'times'=>$time];
+        $data = ['name'=>$name,'pwd'=>md5($pwd),'times'=>$time];
         $obj = new Admin();
         $res = $obj->insertGetId($data);
         if(!$res){
@@ -58,7 +66,7 @@ Class AdminController{
         $role = $_POST['r_id'];
         $obj = Admin::find($id);
         $obj->name = $name;
-        $obj->pwd = $pwd;
+        $obj->pwd = md5($pwd);
         $obj->r_id = $role;
         $res = $obj->save();
         if(!$res){
@@ -125,5 +133,45 @@ Class AdminController{
                 return json_encode(['code'=>1,'message'=>'删除角色成功']);
             }
         }
+    }
+    //修改角色
+    public function updRole(){
+        $name = $_GET['name'];
+        $power = Power::get(['id','name'])->toArray();
+        return view('updRole',['roleName'=>$name,'power'=>$power]);
+    }
+    //执行修改操作
+    public function doUpdRole(){
+        $powerId = $_POST['p_id'];
+        $roleName = $_POST['r_name'];
+        $res = RolePower::where('r_name',$roleName)->where('p_id',$powerId)->get()->toArray();
+        if(!empty($res)){
+            echo "<script>alert('已有此权限！');location.href='updRole?name=$roleName'</script>;";die;
+        }
+        $obj = new RolePower();
+        $res = $obj->insertGetId(['r_name'=>$roleName,'p_id'=>$powerId]);
+        if($res){
+            echo "<script>alert('添加完成！');location.href='updRole?name=$roleName'</script>;";die;
+        }
+    }
+    //获取角色组
+    public function getRoleGroup(){
+        $roleId = $_POST['roleId'];
+        $res = Admin::where('r_id',$roleId)->get()->toArray();
+        if(empty($res)){
+            return json_encode(['code'=>0,'message'=>'该角色下没有成员']);
+        }
+        return json_encode(['code'=>1,'message'=>'success','data'=>$res]);
+    }
+    //删除角色成员
+    public function delRoleAdmin(){
+        $adminId = $_POST['adminId'];
+        $obj = Admin::find($adminId);
+        $obj->r_id = null;
+        $res = $obj->save();
+        if(!$res){
+            return json_encode(['code'=>0,'message'=>'删除失败']);
+        }
+        return json_encode(['code'=>1,'message'=>'删除成功']);
     }
 }

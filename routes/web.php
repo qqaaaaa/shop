@@ -25,3 +25,7 @@ Route::any('addRole','AdminController@addRole');
 Route::any('doAddRole','AdminController@doAddRole');
 Route::any('roleList','AdminController@roleList');
 Route::any('delRole','AdminController@delRole');
+Route::any('updRole','AdminController@updRole');
+Route::any('doUpdRole','AdminController@doUpdRole');
+Route::any('getRoleGroup','AdminController@getRoleGroup');
+Route::any('delRoleAdmin','AdminController@delRoleAdmin');
