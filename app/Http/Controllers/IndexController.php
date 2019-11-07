@@ -87,11 +87,14 @@ class IndexController extends Controller
 	public function classifyDel(){
 		$id = Input::get('id');
 		$user = classify::find($id);
-		$user->delete();
-		if($user){
-			echo "<script>alert('删除成功');location.href='classifyShow'</script>";die;
+		if($user['id'] == $user['pid']){
+			$user->delete();
+			if($user){
+				echo "<script>alert('删除成功');location.href='classifyShow'</script>";die;
+			}
+		}else{
+			echo "<script>alert('请先解除字节点');location.href='classifyShow'</script>";die;
 		}
-
 	}
 
 	public function propertyUpd(){
@@ -100,7 +103,7 @@ class IndexController extends Controller
 		$arr = Property::find($id)->toArray();
 		$res = Classify::get()->toArray();
 		$data = $this->getTree($res);
-
+		// var_dump($data);die;
 		return view('Index/propertyUpd')->with('arr',$arr)->with('data',$data);
 	}
 
