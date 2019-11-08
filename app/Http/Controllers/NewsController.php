@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Role;
-use App\Models\Roleower;
+use App\Models\RolePower;
 use App\Models\Power;
 
 class NewsController extends Controller
@@ -39,13 +39,13 @@ class NewsController extends Controller
       $array_2=[];
       foreach ($rolepower['0']['rolepower'] as $key => $v) {
          foreach ($v['power'] as $key => $va) {
-            if ($va['pid']==0) {
+            if ($va['pid']==0&&$va['show']==1) {
                $array_1[$va['id']]['id']=$va['id'];
               $array_1[$va['id']]['pid']=$va['pid'];
               $array_1[$va['id']]['name']=$va['name'];
               $array_1[$va['id']]['route']=$va['route'];
             }
-             if ($va['pid']!=0) {
+             if ($va['pid']!=0&&$va['show']==1) {
                $array_2[$va['id']]['id']=$va['id'];
               $array_2[$va['id']]['pid']=$va['pid'];
               $array_2[$va['id']]['name']=$va['name'];
@@ -53,17 +53,120 @@ class NewsController extends Controller
             }
          }
          }
-
+         $arr = ['arr1'=>$array_1,'arr2'=>$array_2,'name'=>$name];
+         $uid=$flight[0]['id'];
+         session(['userid' => $arr]);
+         // print_r(session($uid));die;
    	$tim=$flight[0]['times']-7*24*60*60;
    	//判断是否即将过期
    	if ($time>$tim||$time>$times) {
    		echo "<script>alert('该密码即将过期请尽早更换密码避免耽误您的使用')</script>";
-         return view('News/show',['array_1'=>$array_1,'array_2'=>$array_2,'name'=>$name]);
+         return view('News/show',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']]);
    	}
-      return view('News/show',['array_1'=>$array_1,'array_2'=>$array_2,'name'=>$name]);
+         return redirect('homePage');
    	
    }
+
+   public function homePage(){
+      session('userid');
+      return view('News/show',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']]);
+   }
+
    public function menuList(){
-      return view('News/menu');
+      $menu = Power::where('pid',0)->paginate(10);
+      session('userid');
+      return view('News/menu',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name'],'menu'=>$menu]);
+   }
+   //菜单添加页面渲染
+   public function menuAdd(){
+      return view('News/menuadd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']]);
+   }
+   //菜单添加
+   public function menuAdds(){
+     if ($_POST['name']=='') {
+        return back()->withErrors(['菜单名称不可以为空'])->withInput();
+     }
+     $name=$_POST['name'];
+     $show=$_POST['show'];
+         $flight = new Power;        
+        $flight->name = $name;  
+        $flight->show = $show;
+        $flight->pid = 0;         
+        $flight->save();  
+        return redirect('menuList');
+   }
+   //菜单子权限
+   public function menuDetails(){
+      $id=$_GET['id'];
+      $menu = Power::where('pid',$id)->paginate(10);
+      return view('News/menuDetails',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name'],'menu'=>$menu,'id'=>$id]);
+   }
+   //子菜单添加页面
+   public function subMenuAdd(){
+      $id=$_GET['id'];
+       return view('News/subMenuAdd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name'],'id'=>$id]);
+   }
+   //子菜单添加
+   public function subMenuAdds(){
+       if ($_POST['name']=='') {
+        return back()->withErrors(['菜单名称不可以为空'])->withInput();
+     }
+      $name=$_POST['name'];
+      $show=$_POST['show'];
+      $pid=$_POST['pid'];
+        $flight = new Power;        
+        $flight->name = $name;  
+        $flight->show = $show;
+        $flight->pid = $pid;         
+        $flight->save();  
+        return redirect("menuDetails?id=$pid");
+   }
+   //子菜单删除
+   public function subMenuDel(){
+      $id=$_GET['id'];
+      $menus=  Power::where('id',$id)->get()->toArray();
+      $pid=$menus['0']['pid'];
+      $menu = Power::where('id',$id)->delete();
+      $m=RolePower::where('p_id',$id)->delete();
+      return redirect("menuDetails?id=$pid");
+   }
+   //子菜单修改页面
+   public function subMenuCompile(){
+      $id=$_GET['id'];
+      $menus=  Power::where('id',$id)->get()->toArray();
+      $names=$menus['0']['name'];
+      return view('News/subMenuCompile',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name'],'id'=>$id,'names'=>$names]);
+   }
+   //子菜单修改
+   public function subMenuCompiles(){
+      $id=$_POST['id'];
+      $name=$_POST['name'];
+      $show=$_POST['show'];
+      $menus= Power::where('id',$id)->update(['name'=>$name,'show'=>$show]);
+      $menu= Power::where('id',$id)->get()->toArray();
+      $pid=$menu['0']['pid'];
+      return redirect("menuDetails?id=$pid");
+   }
+   //菜单编辑页面
+   public function menuCompile(){
+    $id=$_GET['id'];
+    $menus=  Power::where('id',$id)->get()->toArray();
+    $names=$menus['0']['name'];
+    return view('News/menuCompile',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name'],'id'=>$id,'names'=>$names]);
+   }
+   //菜单编辑
+   public function menuCompiles(){
+    $id=$_POST['id'];
+      $name=$_POST['name'];
+      $show=$_POST['show'];
+      $menus= Power::where('id',$id)->update(['name'=>$name,'show'=>$show]);
+       return redirect('menuList');
+   }
+   //菜单删除
+   public function menuDel(){
+      $id=$_GET['id'];
+      $menu = Power::where('pid',$id)->delete();
+      $menu = Power::where('id',$id)->delete();
+      return redirect("menuList");
    }
 }
