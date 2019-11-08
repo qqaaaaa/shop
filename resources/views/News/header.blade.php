@@ -10,6 +10,10 @@
 <![endif]-->
 <script src="../../xgreen/js/jquery.js"></script>
 <script src="../../xgreen/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
 <script>
   var t=null;
    t=setTimeout(time,1000);   //设置定时器，一秒刷新一次
@@ -64,16 +68,15 @@
 <!--header-->
 <header>
  <h1><img src="../../xgreen/images/admin_logo.png"/></h1>
- <ul class="rt_nav">
- <li ><div id="timeShow"></div></li>
-  <li><a href="#" class="admin_icon"><?php echo $name; ?></a></li>
-  <li><a href="user" class="quit_icon">安全退出</a></li>
+ <ul class="rt_nav" style="height:48px;">
+ <li ><div id="timeShow" ></div><div>欢迎<?php echo $name; ?></div></li>
+  <li><a href="user" class="quit_icon"></a></li>
  </ul>
 </header>
 
 <!--aside nav-->
 <aside class="lt_aside_nav content mCustomScrollbar">
- <h2><a href="index.php">首页</a></h2>
+ <h2><a href="homePage">首页</a></h2>
  <ul>
   <li>
    <dl>

@@ -18,6 +18,8 @@ Route::get('/', function () {
 Route::get('user', 'NewsController@user');
 //登录验证
 Route::post('loGin', 'NewsController@loGin');
+//首页
+Route::any('homePage', 'NewsController@homePage');
 //菜单列表
 Route::any('menuList', 'NewsController@menuList');
 
@@ -72,10 +74,43 @@ Route::any('/addressUpdate','ShoporderController@addressUpdate');
 Route::any('/updateselect','ShoporderController@updateselect');
 Route::any('/trade_user','ShoporderController@trade_user');
 Route::any('/nameUpdate','ShoporderController@nameUpdate');
+
+//渲染修改角色页面
 Route::any('updRole','AdminController@updRole');
+//修改角色信息
 Route::any('doUpdRole','AdminController@doUpdRole');
+//获取角色成员
 Route::any('getRoleGroup','AdminController@getRoleGroup');
+//删除角色成员
 Route::any('delRoleAdmin','AdminController@delRoleAdmin');
+//获取用户意见
 Route::any('getOpinion','AdminController@getOpinion');
+//渲染回复用户意见页面
 Route::any('replyUser','AdminController@replyUser');
+//回复用户
 Route::any('doReply','AdminController@doReply');
+
+//菜单添加页面渲染
+Route::any('menuAdd', 'NewsController@menuAdd');
+//菜单添加
+Route::any('menuAdds', 'NewsController@menuAdds');
+//菜单删除
+Route::any('menuAdds', 'NewsController@menuAdds');
+//查看子菜单
+Route::any('menuDetails', 'NewsController@menuDetails');
+//子菜单添加页面
+Route::any('subMenuAdd', 'NewsController@subMenuAdd');
+//子菜单添加
+Route::any('subMenuAdds', 'NewsController@subMenuAdds');
+//子菜单修改页面
+Route::any('subMenuCompile', 'NewsController@subMenuCompile');
+//子菜单删除
+Route::any('subMenuDel', 'NewsController@subMenuDel');
+//子菜单修改
+Route::any('subMenuCompiles', 'NewsController@subMenuCompiles');
+//菜单编辑页面
+Route::any('menuCompile', 'NewsController@menuCompile');
+//菜单编辑
+Route::any('menuCompiles', 'NewsController@menuCompiles');
+//菜单删除
+Route::any('menuDel', 'NewsController@menuDel');

@@ -4,13 +4,12 @@
 <div>
   <center><h1>菜单列表</h1></center>	
   </div>
-  <a href="menuAdd" class="btn btn-primary btn-lg" style="height:40px; width:100px; float: right;"><span style="font-size:15px;">添加菜单</span></a>
+  <a href="subMenuAdd?id=<?php echo $id; ?>" class="btn btn-primary btn-lg" style="height:40px; width:100px; float: right;"><span style="font-size:15px;">添加子菜单</span></a>
    <thead>
       <tr>
          <th>ID</th>
          <th>菜单名称</th>
          <th>菜单是否展示</th>
-         <th>查看</th>
          <th>操作</th>
       </tr>
    </thead>
@@ -25,8 +24,7 @@
          <?php if ($v['show']==0): ?>
          	<td>否</td>
          <?php endif ?>
-         <td><a href="menuDetails?id=<?php echo $v['id']; ?>">查看详情</a></td>
-         <td> <a href="menuCompile?id=<?php echo $v['id']; ?>">编辑</a>  <a href="menuDel?id=<?php echo $v['id']; ?>">删除</a></td>
+         <td> <a href="subMenuCompile?id=<?php echo$v['id']; ?>">编辑</a>  <a href="subMenuDel?id=<?php echo $v['id']; ?>">删除</a></td>
       </tr>
    <?php endforeach ?>
    
