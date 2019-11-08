@@ -32,6 +32,7 @@ Route::any('addRole','AdminController@addRole');
 Route::any('doAddRole','AdminController@doAddRole');
 Route::any('roleList','AdminController@roleList');
 Route::any('delRole','AdminController@delRole');
+<<<<<<< HEAD
 
 Route::any('property','IndexController@property');
 Route::any('propertyAdd','IndexController@propertyAdd');
@@ -54,3 +55,12 @@ Route::any('/addressUpdate','ShoporderController@addressUpdate');
 Route::any('/updateselect','ShoporderController@updateselect');
 Route::any('/trade_user','ShoporderController@trade_user');
 Route::any('/nameUpdate','ShoporderController@nameUpdate');
+=======
+Route::any('updRole','AdminController@updRole');
+Route::any('doUpdRole','AdminController@doUpdRole');
+Route::any('getRoleGroup','AdminController@getRoleGroup');
+Route::any('delRoleAdmin','AdminController@delRoleAdmin');
+Route::any('getOpinion','AdminController@getOpinion');
+Route::any('replyUser','AdminController@replyUser');
+Route::any('doReply','AdminController@doReply');
+>>>>>>> fanxuxin
