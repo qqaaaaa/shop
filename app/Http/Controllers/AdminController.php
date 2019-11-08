@@ -6,6 +6,8 @@ use App\Models\Admin;
 use App\Models\Role;
 use App\Models\RolePower;
 use App\Models\Power;
+use App\Models\Opinion;
+use App\Models\ReplyMsg;
 
 Class AdminController{
 
@@ -137,6 +139,7 @@ Class AdminController{
     //修改角色
     public function updRole(){
         $name = $_GET['name'];
+
         $power = Power::get(['id','name'])->toArray();
         return view('updRole',['roleName'=>$name,'power'=>$power]);
     }
@@ -173,5 +176,27 @@ Class AdminController{
             return json_encode(['code'=>0,'message'=>'删除失败']);
         }
         return json_encode(['code'=>1,'message'=>'删除成功']);
+    }
+    //获取用户意见
+    public function getOpinion(){
+        $opinion = Opinion::paginate(10);
+        return view('opinion',['opinion'=>$opinion]);
+    }
+    //渲染回复消息页面
+    public function replyUser(){
+        $user = $_GET['user'];
+        return view('replyUser',['name'=>$user]);
+    }
+    //回复消息
+    public function doReply(){
+        $message = $_POST['message'];
+        $userName = $_POST['username'];
+        $time = time();
+        $obj = new ReplyMsg();
+        $res = $obj->insertGetId(['user_name'=>$userName,'message'=>$message,'times'=>$time]);
+        if(!$res){
+            echo "<script>alert('回复失败！');location.href='getOpinion'</script>";
+        }
+        echo "<script>alert('回复成功！');location.href='getOpinion'</script>";
     }
 }

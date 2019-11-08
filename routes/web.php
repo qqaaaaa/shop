@@ -29,3 +29,6 @@ Route::any('updRole','AdminController@updRole');
 Route::any('doUpdRole','AdminController@doUpdRole');
 Route::any('getRoleGroup','AdminController@getRoleGroup');
 Route::any('delRoleAdmin','AdminController@delRoleAdmin');
+Route::any('getOpinion','AdminController@getOpinion');
+Route::any('replyUser','AdminController@replyUser');
+Route::any('doReply','AdminController@doReply');
