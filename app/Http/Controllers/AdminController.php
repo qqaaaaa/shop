@@ -6,25 +6,19 @@ use App\Models\Admin;
 use App\Models\Role;
 use App\Models\RolePower;
 use App\Models\Power;
-<<<<<<< HEAD
-=======
 use App\Models\Opinion;
 use App\Models\ReplyMsg;
->>>>>>> fanxuxin
 
 Class AdminController{
 
     public function index(){
-<<<<<<< HEAD
 //       
-=======
         $res = Admin::with(['role'=>function($rolepower){$rolepower->with(['rolepower'=>function($power){$power->with(['power']);}]);}])->where('r_id',1)->get()->toArray();
         var_dump($res);
->>>>>>> fanxuxin
     }
     //渲染添加页面
     public function addAdmin(){
-        return view('addAdmin');
+        return view('Admin/addAdmin');
     }
     //添加的方法
     public function doAddAdmin(){
@@ -47,7 +41,7 @@ Class AdminController{
     //管理员列表
     public function adminList(){
         $res = Admin::all();
-        return view('adminList',['adminList'=>$res]);
+        return view('Admin/adminList',['adminList'=>$res]);
     }
     //删除管理员
     public function delAdmin(){
@@ -65,7 +59,7 @@ Class AdminController{
         $info = $obj->where('id',$id)->get()->toArray();
         $roleObj = new Role();
         $roleInfo = $roleObj->all()->toArray();
-        return view('adminInfo',['adminInfo'=>$info[0],'roleInfo'=>$roleInfo]);
+        return view('Admin/adminInfo',['adminInfo'=>$info[0],'roleInfo'=>$roleInfo]);
     }
     //修改管理员信息
     public function doUpdAdmin(){
@@ -87,7 +81,7 @@ Class AdminController{
     public function addRole(){
         $power = Power::all()->toArray();
         $admin = Admin::where('r_id',null)->get()->toArray();
-        return view('addRole',['power'=>$power,'admin'=>$admin]);
+        return view('Admin/addRole',['power'=>$power,'admin'=>$admin]);
     }
     //添加管理员角色
     public function doAddRole(){
@@ -117,7 +111,7 @@ Class AdminController{
         $allRole=Role::with(['rolepower'=>function($rolepower){$rolepower->with(['power']);}])->get()->toArray();
 //        $allRole = RolePower::with('power')->get()->toArray();
 //        var_dump($allRole);die;
-        return view('roleList',['allRole'=>$allRole]);
+        return view('Admin/roleList',['allRole'=>$allRole]);
     }
     //删除角色
     public function delRole(){
@@ -148,7 +142,7 @@ Class AdminController{
         $name = $_GET['name'];
 
         $power = Power::get(['id','name'])->toArray();
-        return view('updRole',['roleName'=>$name,'power'=>$power]);
+        return view('Admin/updRole',['roleName'=>$name,'power'=>$power]);
     }
     //执行修改操作
     public function doUpdRole(){
@@ -187,12 +181,12 @@ Class AdminController{
     //获取用户意见
     public function getOpinion(){
         $opinion = Opinion::paginate(10);
-        return view('opinion',['opinion'=>$opinion]);
+        return view('Admin/opinion',['opinion'=>$opinion]);
     }
     //渲染回复消息页面
     public function replyUser(){
         $user = $_GET['user'];
-        return view('replyUser',['name'=>$user]);
+        return view('Admin/replyUser',['name'=>$user]);
     }
     //回复消息
     public function doReply(){
