@@ -15,31 +15,21 @@
 
 <a href="index"><button type="button" class="btn btn-info"><<返回</button></a>
 <div style="margin-top:70px">
-
 <table class="table table-bordered">
- <tr>
-   <td>ID</td>
-   <td>订单号</td>
-   <td>收货人</td>
-   <td>订单状态</td>
-   <td>支付状态</td>
-   <td>当前位置</td>
-   <td>收货地址</td>
-   <td>收货人联系方式</td>
-   <td>发货时间</td>
-   <td>预计抵达时间</td>
-   <td>操作</td>
+@foreach($res as $key=>$val)
+ <tr style="background-color:#5CD68D">
+<td>订单人</td><td style="height:45px"><?php echo $val->buyer_name?>的订单</td>
  </tr>
-<tbody id="content">
- @foreach($res as $key=>$val)
+ <tr>
+   <td>订单号</td><td><?php echo $val->order_number?></td>
+ </tr>
 
  <tr>
-   <td><?php echo $val->order_id?></td>
-   <td ><?php echo $val->order_number?></td>
+   <td>收货人</td> <td id="<?php echo $val->order_number?>"><span id="name"><?php echo $val->consignee_name?></span><input type="email" class="form-control" id="nameinput" style="display:none"></td>
+ </tr>
 
-   <td id="<?php echo $val->order_number?>"><span id="name"><?php echo $val->consignee_name?></span><input type="email" class="form-control" id="nameinput" style="display:none"></td>
-
-   <td id="<?php echo $val->order_number?>"><span id="trade_status"><?php if($val->trade_status == 1){echo "已收货";}if($val->trade_status == 0){echo "配送中";}if($val->trade_status == 2){echo "未出货";}if($val->trade_status == 3){echo "已送达";}if($val->trade_status == 4){echo "其他";}?></span>
+ <tr>
+   <td>订单状态</td><td id="<?php echo $val->order_number?>"><span id="trade_status"><?php if($val->trade_status == 1){echo "已收货";}if($val->trade_status == 0){echo "配送中";}if($val->trade_status == 2){echo "未出货";}if($val->trade_status == 3){echo "已送达";}if($val->trade_status == 4){echo "其他";}?></span>
     <select class="form-control" id="trade_status_input" style="display:none">
   <option value="1">已出货</option>
   <option value="2">未出货</option>
@@ -47,20 +37,70 @@
   <option value="3">已送达</option>
   <option value="4">其他</option>
 </select></td> 
-<td><?php if($val->pay_status == 1){echo "未付款";}if($val->pay_status == 2){echo "已付款";}if($val->pay_status == 3){echo "货到未付款";}if($val->pay_status == 4){echo "货到以付款";}?></td>
-   <td id="<?php echo $val->order_number?>"><span id="address"><?php echo $val->consignee_address?></span><input type="email" class="form-control" id="addressinput" style="display:none"></td>
-
-   <td><?php echo $val->user_address?></td>
-   <td><?php echo $val->consignee_phone?></td>
-   <td><?php echo $val->delivery_time?></td>
-   <td><?php echo $val->best_time?></td>
-   <td><a href="updateselect">查看修改记录</a></td>
  </tr>
 
- @endforeach
-</tbody>
-</table>
+ <tr>
+   <td>支付状态</td><td><?php if($val->pay_status == 1){echo "未付款";}if($val->pay_status == 2){echo "已付款";}if($val->pay_status == 3){echo "货到未付款";}if($val->pay_status == 4){echo "货到以付款";}?></td>
+   
+ </tr>
 
+ <tr>
+   <td>当前位置</td><td id="<?php echo $val->order_number?>"><span id="address"><?php echo $val->consignee_address?></span><input type="email" class="form-control" id="addressinput" style="display:none"></td>
+ </tr>
+
+ <tr>
+   <td>收货地址</td><td><?php echo $val->user_address?></td>
+ </tr>
+
+ <tr>
+   <td>收货人联系方式</td><td><?php echo $val->consignee_phone?></td>
+ </tr>
+
+ <tr>
+   <td>发货时间</td><td><?php echo $val->delivery_time?></td>
+ </tr>
+
+ <tr>
+   <td>预计抵达时间</td><td><?php echo $val->best_time?></td>
+ </tr>
+ 
+ <tr style="height:60px">
+   
+ </tr>
+ 
+ 
+ @endforeach
+<td>操作</td><td><a href="updateselect">查看修改记录</a></td>
+</table>
+<table class="table table-bordered">
+
+<tr>
+  <td>订单号</td>
+  <td>商品名称</td>
+  <td>商品数量</td>
+  <td>产品单价</td>
+  <td>优惠劵</td>
+  <td>应付金额</td>
+  <td>操作</td>
+</tr>
+
+@foreach($ress as $key=>$val)
+<tr>
+  <td><?php echo $val->order_number?></td>
+  <td><?php echo $val->pstore?></td>
+  <td><?php echo $val->product_number?></td>
+  <td><?php echo $val->monry?></td>
+  <td id="<?php echo $val->order_number?>"><span class="discount"><?php echo $val->discount_name?></span>
+  <select class="discount_input" style="display:none">
+  <option value="1">无抵用卷</option>
+  <option value="2">满400减50</option>
+  <option value="3">满5减1</option>
+</select></td>
+  <td id="<?php echo $val->product_id?>"><?php if($val->discount_name == "满400减50"){if($val->product_number*$val->monry>400){echo $val->product_number*$val->monry-(floor($val->product_number*$val->monry/400)*50);}else{echo $val->product_number*$val->monry;}}if($val->discount_name == "满5减1"){if($val->product_number>5){echo $val->product_number*$val->monry-(floor($val->product_number/5)*$val->monry);}else{echo $val->product_number*$val->monry;}}if($val->discount_name == "无抵用卷"){echo $val->product_number*$val->monry;}?></td>
+  <td id="<?php echo $val->product_id?>"><button type="button" class="btn btn-info" id="findOrder">查看详情</button></td>
+</tr>
+@endforeach
+</table>
 </div>
 <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 
@@ -99,7 +139,7 @@ $(document).on("click","#trade_status",function(){
 $(document).on("blur","#trade_status_input",function(){
    var trade_status = $("#trade_status_input").val();
    var info_id = $(this).parent().attr('id');
-   
+   //alert(info_id);die;
    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
    $.ajax({
     type:"post",
@@ -163,6 +203,45 @@ $(document).on("blur","#nameinput",function(){
          document.getElementById('name').innerHTML=nameinput;
           document.getElementById('nameinput').style.display='none';
     
+    }
+   })
+   })
+
+$(document).on("click",".discount",function(){
+$(this).empty();
+ $(this).next().attr("style","display:block");
+
+})
+
+$(document).on("blur",".discount_input",function(){
+   var discount_input = $(this).val();
+   var that = $(this);
+   var info_id = $(this).parent().attr('id');
+   var id = $(this).parent().next().attr('id');
+   //alert(id);die;
+  //alert(nameinput);
+   $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+   $.ajax({
+    type:"post",
+    url:"discountUpdate",
+    dataType:"json",
+    data:{discount_input:discount_input,info_id:info_id,id:id},
+    success:function(msg){
+      
+        if(msg == 1){
+         var disput = "无抵用卷";
+        }
+        if(msg == 2){
+          var disput = "满400减50";
+        }
+        if(msg == 3){
+          var disput = "满5减1";
+        }
+        
+
+        that.attr("style","display:none");
+        that.prev().html(disput);
+  
     }
    })
    })

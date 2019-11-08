@@ -11,6 +11,7 @@ class ShoporderController extends Controller{
 		session('name','刘德华');
       $query = new \App\Models\Test();
       $res = $query->selectorder();
+
       //var_dump($res);die;
       return view('order_info/order_info_show',['res'=>$res]);
 	}
@@ -28,11 +29,12 @@ class ShoporderController extends Controller{
 	}
 	public function trade_status(){
 		$name = $_POST['id'];
-		//var_dump($id);die;
+		//var_dump($name);die;
 		$query = new \App\Models\Test();
 		$res = $query->find_order_trade($name);
+		$ress = $query->selectProduct($name);
 		
-		return view('order_info/order_info_trade',['res'=>$res]);
+		return view('order_info/order_info_trade',['res'=>$res,'ress'=>$ress]);
 
 	}
 	public function trade_status_input(){
@@ -109,6 +111,69 @@ class ShoporderController extends Controller{
         	echo 2;
         }
     }
+    public function brandShow(){
+      $query = new \App\Models\Test();
+      $res = $query->brandShow();
+      //var_dump($res);die;
+      return view('order_info/order_brandShow',['res'=>$res]);
+    }
+     public function brandDel(){
+     	$brand_id = $_POST['brand_id'];
+     	//return $brand_id;
+     	$query = new \App\Models\Test();
+     	$res = $query->brandDel($brand_id);
+     	if($res){
+     		echo "1";
+     	}
+     	else
+     	{
+     		echo "0";
+     	}
+     }
+     public function brandAdd(){
+     	return view('order_info/order_brandAdd');
+     }
+     public function brandAdd_do(){
+     	$brand_name = $_POST['brand_name'];
+     	$brand_state = $_POST['brand_state'];
+     	$query = new \App\Models\Test();
+     	$res = [];
+     	$res['brand_name'] = $brand_name;
+     	$res['brand_state'] = $brand_state;
+     	$res = $query->brandAdd($res);
+     	if($res){
+     		return redirect('brandShow');
+     	}
+     	else{
+     		echo "<script>alert('添加失败')</script>";
+     	}
+     }
+      public function discountUpdate(){
+    		$name = session('name');
+		$updatetime = date("Y-m-d h:i:s",strtotime("+8 hour"));
+		$updatechange = "优惠券修改";
+		$discount_input = $_POST['discount_input'];
+		$info_id = $_POST['info_id'];
+        $id = $_POST['id'];
+		$query = new \App\Models\Test();
+		$res = $query->trade_discount_update($discount_input,$info_id,$id);
 
+        if($res){
+        	$res = [];
+        	$res['user'] = $name;
+        	$res['change'] = $updatechange;
+        	$res['updatetime'] = $updatetime;
+        	$res['order_number'] = $info_id;
+            $res = $query->updatechange($res);
+            $abb = $query->findDiscount($discount_input);
+            if($abb){
+            	echo $discount_input;
+            }
+        	
+        }
+        else{
+        	echo 2;
+        }
+    }
 }
 ?>
