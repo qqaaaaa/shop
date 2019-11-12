@@ -34,3 +34,10 @@ Route::any('classifyUpdok','IndexController@classifyUpdok');
 Route::any('classifyDel','IndexController@classifyDel');
 //商品删除
 Route::any('propertyDel','IndexController@propertyDel');
+//商品属性值
+Route::any('abilityAdd','IndexController@abilityAdd');
+//商品添加
+Route::any('productAdd','IndexController@productAdd');
+Route::any('productAddok','IndexController@productAddok');
+
+

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Request;
 use App\Models\Property;
 use App\Models\Classify;
+use App\Models\Brand;
 
 class IndexController extends Controller
 {
@@ -93,7 +94,7 @@ class IndexController extends Controller
 				echo "<script>alert('删除成功');location.href='classifyShow'</script>";die;
 			}
 		}else{
-			echo "<script>alert('请先解除字节点');location.href='classifyShow'</script>";die;
+			echo "<script>alert('请先解除子节点');location.href='classifyShow'</script>";die;
 		}
 	}
 
@@ -132,6 +133,23 @@ class IndexController extends Controller
 		if($user){
 			echo "<script>alert('删除成功');location.href='property'</script>";die;
 		}
+	}
+
+	public function abilityAdd(){
+		
+		return view('abilityAdd');
+	}
+
+	public function productAdd(){
+		$res = Classify::get()->toArray();
+		$data = $this->getTree($res);
+		$arr =  Brand::get()->toArray();
+		return view('Index/productAdd')->with('data',$data)->with('arr',$arr);
+	}
+
+	public function productAddok(){
+		$file = Input::file('image');
+		echo $file;
 	}
 
 	/*

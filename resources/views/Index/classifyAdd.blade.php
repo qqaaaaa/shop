@@ -62,7 +62,7 @@
        <dd><a href="http://www.shop.com/propertyAdd" >属性添加</a></dd>
        <dd><a href="http://www.shop.com/classifyAdd" class="active">分类添加</a></dd>
        <dd><a href="http://www.shop.com/classifyShow">分类列表</a></dd>
-       <dd><a href="#">商品添加</a></dd>
+       <dd><a href="http://www.shop.com/productAdd">商品添加</a></dd>
        <dd><a href="#">商品列表</a></dd>
     </dl>
    </dl>
