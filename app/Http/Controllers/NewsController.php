@@ -150,6 +150,8 @@ class NewsController extends Controller
    //菜单编辑页面
    public function menuCompile(){
     $id=$_GET['id'];
+    print_r($id);
+    session_start();
     $menus=  Power::where('id',$id)->get()->toArray();
     $names=$menus['0']['name'];
     return view('News/menuCompile',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name'],'id'=>$id,'names'=>$names]);
