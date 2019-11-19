@@ -63,7 +63,7 @@
        <dd><a href="http://www.shop.com/classifyAdd">分类添加</a></dd>
        <dd><a href="http://www.shop.com/classifyShow">分类列表</a></dd>
        <dd><a href="http://www.shop.com/productAdd">商品添加</a></dd>
-       <dd><a href="#">商品列表</a></dd>
+       <dd><a href="http://www.shop.com/productShow">商品列表</a></dd>
     </dl>
    </dl>
   </li>
@@ -82,10 +82,10 @@
 	    </div>
       <div style="margin-top:50px;" >
       <label for="text" style="float:left;">属性所属分类:</label><br>
-	    <select name="classify" id="classify" style="float:left;" class="form-control">
+	    <select name="c_id" id="c_id" style="float:left;" class="form-control">
           <option value="">请选择...</option>
           <?php foreach ($data as $key => $value): ?>
-            <option value="<?php echo $value['clname'];?>"><?php echo str_repeat("-&nbsp;",$value['level']) ?><?php echo $value['clname'];?></option>
+            <option value="<?php echo $value['id'];?>"><?php echo str_repeat("-&nbsp;",$value['level']) ?><?php echo $value['clname'];?></option>
           <?php endforeach ?>
         </select>
         </div>
@@ -112,7 +112,7 @@
   })
   $('#add').click(function(){
   	var proname = $('#proname').val()
-  	var classify = $('#classify').val()
+  	var c_id = $('#c_id').val()
   	var deny = $('#deny').val()
   	// alert(deny)
   	$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -121,7 +121,7 @@
   				type: "post",
   				data: {
   					proname:proname,
-  					classify:classify,
+  					c_id:c_id,
   					deny:deny,
   				},
   				dataType: "json",
@@ -133,7 +133,7 @@
   				}
   			})
   	if(proname != ""){
-  		if(classify != ""){
+  		if(c_id != ""){
   			
   		}else{
   			$('#in2').html('不能为空')

@@ -7,6 +7,9 @@ use Request;
 use App\Models\Property;
 use App\Models\Classify;
 use App\Models\Brand;
+use App\Models\Ability;
+use App\Models\Product;
+
 
 class IndexController extends Controller
 {
@@ -82,7 +85,7 @@ class IndexController extends Controller
 			$re['msg'] = '修改完成';
 			echo json_encode($re);die;
 		}
-		
+
 	}
 
 	public function classifyDel(){
@@ -136,8 +139,48 @@ class IndexController extends Controller
 	}
 
 	public function abilityAdd(){
-		
-		return view('abilityAdd');
+		$id = Input::get('id');
+		return view('Index/abilityAdd')->with('id',$id);
+	}
+
+	public function abilityAddok(){
+		$input = Request::all();
+		// var_dump($input);die;
+		$res = new Ability;
+		$user = $res->insertGetId($input);
+		if($user){
+			$re['status'] = 1;
+			$re['msg'] = '添加完成';
+			echo json_encode($re);die;
+		}
+
+	}
+
+	public function abilityUpd(){
+		$id = Input::get('id');
+		$arr = Ability::find($id)->toArray();
+		return view('Index/abilityUpd')->with('arr',$arr)->with('id',$id);
+	}
+
+	public function abilityUpdok(){
+		$data = [
+
+			'ability'=>Input::post('ability'),
+		];
+		$id = Input::post('id');
+		$res = Ability::where('id',$id)->update($data);
+		if($res){
+			$re['status'] = 1;
+			$re['msg'] = '修改成功';
+			echo json_encode($re);die;
+		}
+	}
+
+	public function abilityShow(){
+		$id = Input::get('id');
+		$res = Ability::where('c_id',$id)->get()->toArray();
+		// var_dump($user);die;
+		return view('Index/abilityShow')->with('res',$res);
 	}
 
 	public function productAdd(){
@@ -148,13 +191,74 @@ class IndexController extends Controller
 	}
 
 	public function productAddok(){
-		$file = Input::file('image');
-		echo $file;
+		$data = [
+			'pstore'=>Input::post('pstore'),
+			'intro'=>Input::post('intro'),
+			'monry'=>Input::post('monry'),
+			'status'=>Input::post('status'),
+			'num'=>Input::post('num'),
+			'gift'=>Input::post('gift'),
+			'c_id'=>Input::post('c_id'),
+			'p_id'=>Input::post('p_id'),
+		];
+		$res = new Product;
+		$user = $res->insertGetId($data);
+		if($user){
+			echo "<script>alert('添加完成');location.href='productShow'</script>";
+		}
+	}
+
+	public function productDel(){
+		$id = Input::get('id');
+		$user = Product::find($id);
+		$user->delete();
+		if($user){
+			echo "<script>alert('删除成功');location.href='productShow'</script>";die;
+		}
+	}
+
+	public function productUpd(){
+		$id = Input::get('id');
+		$arr = Product::find($id)->toArray();
+		return view('Index/productUpd')->with('arr',$arr)->with('id',$id);
+	}
+
+	public function productUpdok(){
+		$data = [
+			'pstore'=>Input::post('pstore'),
+			'intro'=>Input::post('intro'),
+			'monry'=>Input::post('monry'),
+			'status'=>Input::post('status'),
+			'num'=>Input::post('num'),
+			'gift'=>Input::post('gift'),
+			'c_id'=>Input::post('c_id'),
+			'p_id'=>Input::post('p_id'),
+		];
+		$id = Input::get('id');
+		$res = Product::where('id',$id)->update($data);
+		if($res){
+			echo "<script>alert('修改成功');location.href='productShow'</script>";die;
+		}
+
+	}
+
+	public function productShow(){
+		$res = Product::get()->toArray();
+		// var_dump($res);die;
+		return view('Index/productShow')->with('res',$res);
+	}
+
+	public function proSku(){
+		$id = Input::get('id');
+		$c_id = Input::get('c_id');
+		$res = Ability::where('c_id',$c_id)->get()->toArray();
+		// var_dump($res);die;
+		return view('Index/proSku')->with('res',$res)->with('id',$id);
 	}
 
 	/*
 		$res 调入传入数组，pid 找到父节点为0的,level声明根节点级别是一级
-		
+
 	*/
 	public function getTree($res,$pid=0,$level=1){
 		//声明静态数组避免递归多次时多次声明导致数组覆盖
@@ -171,7 +275,7 @@ class IndexController extends Controller
 				//开始递归，查找父id为该节点id的节点，级别为原级别+1
 				$this->getTree($res,$value['id'],$level+1);
 			}
-		
+
 		}
 		return $arr;
 	}

@@ -63,7 +63,7 @@
        <dd><a href="http://www.shop.com/classifyAdd">分类添加</a></dd>
        <dd><a href="http://www.shop.com/classifyShow" class="active">分类列表</a></dd>
        <dd><a href="http://www.shop.com/productAdd">商品添加</a></dd>
-       <dd><a href="#">商品列表</a></dd>
+       <dd><a href="http://www.shop.com/productShow">商品列表</a></dd>
     </dl>
    </dl>
   </li>
@@ -71,7 +71,7 @@
 </aside>
 </div>
 <center>
-  <div class="container" style="width:1000px;">
+  <div class="container" style="width:800px;">
   <h2>分类列表</h2>         
   <table class="table table-bordered">
     <thead>
