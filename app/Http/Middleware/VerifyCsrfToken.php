@@ -28,4 +28,5 @@ class VerifyCsrfToken extends Middleware
         // 禁用CSRF
         return $next($request);
     }
+
 }
