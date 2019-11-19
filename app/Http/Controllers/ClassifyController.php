@@ -24,6 +24,15 @@ class ClassifyController extends Controller
        echo jsonType($code,$msg,$data);die;
     }
 
+    public function clas(){
+        $pid = Input::get('id');
+        $res = Classify::where('pid',$pid)->get()->toArray();
+        $code = 1;
+        $msg = '请求成功';
+        $data = $res;
+        echo jsonType($code,$msg,$data);die;
+    }
+
     public function collect(){
         $data = [
             'u_id'=>Input::get('u_id'),

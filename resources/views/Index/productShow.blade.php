@@ -17,22 +17,22 @@
 <script>
 	(function($){
 		$(window).load(function(){
-			
+
 			$("a[rel='load-content']").click(function(e){
 				e.preventDefault();
 				var url=$(this).attr("href");
 				$.get(url,function(data){
 					$(".content .mCSB_container").append(data); //load new content inside .mCSB_container
-					//scroll-to appended content 
+					//scroll-to appended content
 					$(".content").mCustomScrollbar("scrollTo","h2:last");
 				});
 			});
-			
+
 			$(".content").delegate("a[href='top']","click",function(e){
 				e.preventDefault();
 				$(".content").mCustomScrollbar("scrollTo",$(this).attr("href"));
 			});
-			
+
 		});
 	})(jQuery);
 </script>
@@ -72,7 +72,7 @@
 </div>
 <center>
   <div class="container" style="width:800px;">
-  <h2>商品列表</h2>         
+  <h2>商品列表</h2>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -97,7 +97,7 @@
         <td><?php echo $v['status']; ?></td>
         <td><?php echo $v['num']; ?></td>
         <td><?php echo $v['gift']; ?></td>
-        <td><?php echo $v['image']; ?></td>
+        <td></td>
         <td><?php echo $v['c_id']; ?></td>
         <td><?php echo $v['p_id']; ?></td>
         <td><a href="productUpd?id=<?php echo $v['id']?>">编辑</a><a href="productDel?id=<?php echo $v['id']?>">删除</a></td>
@@ -114,5 +114,5 @@
   $('dt').click(function(){
     $(this).next().toggle('dl')
   })
-  
+
 </script>
