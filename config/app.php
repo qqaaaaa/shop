@@ -133,6 +133,7 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    
 
     'providers' => [
 
@@ -189,7 +190,9 @@ return [
     */
 
     'aliases' => [
-
+        
+        // 'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+        // 'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -225,5 +228,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+// auth('api')->refresh();
+// // 用 JWTAuth Facade
+// JWTAuth::parseToken()->refresh();
+
 
 ];

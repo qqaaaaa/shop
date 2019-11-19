@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::any('login', 'AuthControllera@login');
+Route::any('logout', 'AuthControllera@logout');
+Route::any('refresh', 'AuthControllera@refresh');
+Route::any('me', 'AuthControllera@me');

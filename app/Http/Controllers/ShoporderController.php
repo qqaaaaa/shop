@@ -8,17 +8,19 @@ class ShoporderController extends Controller{
 		//echo "1";die;
 		
 
-		session('name','刘德华');
+		//session('name','刘德华');
       $query = new \App\Models\Test();
       $res = $query->selectorder();
 
       //var_dump($res);die;
-      return view('order_info/order_info_show',['res'=>$res]);
+      return view('order_info/order_info_show',['res'=>$res,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']]);
+      //['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']]
 	}
 	public function search_order_number(){
 		$name = $_POST['name'];
 		$query = new \App\Models\Test();
 		$res = $query->find_order_number($name);
+        var_dump($res);die;
         if($res){
          // return json_encode($res[0]);
          return $res;
@@ -34,7 +36,7 @@ class ShoporderController extends Controller{
 		$res = $query->find_order_trade($name);
 		$ress = $query->selectProduct($name);
 		
-		return view('order_info/order_info_trade',['res'=>$res,'ress'=>$ress]);
+		return view('order_info/order_info_trade',['res'=>$res,'ress'=>$ress,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']]);
 
 	}
 	public function trade_status_input(){
@@ -86,7 +88,7 @@ class ShoporderController extends Controller{
       $query = new \App\Models\Test();
       $res = $query->updateselect();
       //var_dump($res);die;
-      return view('order_info/order_info_update',['res'=>$res]);
+      return view('order_info/order_info_update',['res'=>$res,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']]);
 	}
     
     public function nameUpdate(){
@@ -115,7 +117,7 @@ class ShoporderController extends Controller{
       $query = new \App\Models\Test();
       $res = $query->brandShow();
       //var_dump($res);die;
-      return view('order_info/order_brandShow',['res'=>$res]);
+      return view('order_info/order_brandShow',['res'=>$res,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']]);
     }
      public function brandDel(){
      	$brand_id = $_POST['brand_id'];
@@ -131,7 +133,7 @@ class ShoporderController extends Controller{
      	}
      }
      public function brandAdd(){
-     	return view('order_info/order_brandAdd');
+     	return view('order_info/order_brandAdd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']]);
      }
      public function brandAdd_do(){
      	$brand_name = $_POST['brand_name'];
@@ -175,5 +177,6 @@ class ShoporderController extends Controller{
         	echo 2;
         }
     }
+    
 }
 ?>

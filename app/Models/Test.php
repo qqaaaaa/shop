@@ -63,5 +63,9 @@ class Test extends Model{
 		$res = Db::table("discount")->where('id',$id)->get()->toArray();
 		return $res;
 	}
+	public function wareShow(){
+		$res = Db::table("order_info")->join('order_product', 'order_info.order_number', '=', 'order_product.order_number')->join('product', 'order_product.product_id', '=', 'product.id')->get()->toArray();
+		return $res;
+	}
 }
 ?>

@@ -130,3 +130,16 @@ Route::any('/brandDel','ShoporderController@brandDel');//删除品牌
 Route::any('/brandAdd','ShoporderController@brandAdd');//添加品牌页面
 Route::any('/brandAdd_do','ShoporderController@brandAdd_do');//添加品牌方法
 Route::any('/discountUpdate','ShoporderController@discountUpdate');//优惠券修改
+Route::any('/wareShow','ShoporderController@wareShow');
+Route::any('/orderShow','ShopOrder@orderShow');
+Route::any('/orderShow1','ShopOrder@orderShow1');
+Route::any('/orderBuyer','ShopOrder@orderBuyer');
+Route::any('/buyerUpdate','ShopOrder@buyerUpdate');
+Route::any('/orderInfo','ShopOrder@orderInfo');
+Route::any('/orderLike','ShopOrder@orderLike');
+Route::any('/orderDiscount','ShopOrder@orderDiscount');
+Route::any('/orderAddress','ShopOrder@orderAddress');
+Route::any('/addAddress','ShopOrder@addAddress');
+Route::any('/updAddress','ShopOrder@updAddress');
+Route::any('/reply','ShopOrder@reply');
+Route::any('/updateAddress','ShopOrder@updateAddress');
