@@ -13,7 +13,7 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "tymon/jwt-auth": "1.0.*",
-        "tymon/jwt-auth": "1.*@rc"
+        "phpmailer/phpmailer": "^6.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -38,9 +38,9 @@
             "App\\": "app/"
         },
         "files":[
-
-        "files":[
-            "app/Helpers/functions.php"
+            "app/Helpers/functions.php",
+            "app/Common.php",
+        "app/Commons.php"
         ],
         "classmap": [
             "database/seeds",
@@ -53,6 +53,7 @@
             "Tests\\": "tests/"
         }
     },
+
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {

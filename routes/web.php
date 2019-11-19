@@ -148,6 +148,7 @@ Route::any('menuCompile', 'NewsController@menuCompile');
 Route::any('menuCompiles', 'NewsController@menuCompiles');
 //菜单删除
 Route::any('menuDel', 'NewsController@menuDel');
+
 Route::any('/index','ShoporderController@index');//订单主页
 
 Route::any('/search_order_number','ShoporderController@search_order_number');//搜索订单
