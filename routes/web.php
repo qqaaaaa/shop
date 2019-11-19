@@ -44,6 +44,20 @@ Route::any('doAddRole','AdminController@doAddRole');
 Route::any('roleList','AdminController@roleList');
 //删除角色
 Route::any('delRole','AdminController@delRole');
+//渲染评论
+Route::any('comment','AdminController@comment');
+//评论通过
+Route::any('pass','AdminController@pass');
+//评论不通过
+Route::any('noPass','AdminController@noPass');
+//渲染添加仓库页面
+Route::any('wareHouse','AdminController@wareHouse');
+//添加仓库
+Route::any('addWareHouse','AdminController@addWareHouse');
+//仓库列表
+Route::any('wareHouseList','AdminController@wareHouseList');
+//删除仓库
+Route::any('delWareHouse','AdminController@delWareHouse');
 
 //商品列表
 Route::any('property','IndexController@property');
@@ -134,6 +148,7 @@ Route::any('menuCompile', 'NewsController@menuCompile');
 Route::any('menuCompiles', 'NewsController@menuCompiles');
 //菜单删除
 Route::any('menuDel', 'NewsController@menuDel');
+
 Route::any('/index','ShoporderController@index');//订单主页
 
 Route::any('/search_order_number','ShoporderController@search_order_number');//搜索订单
@@ -149,3 +164,16 @@ Route::any('/brandDel','ShoporderController@brandDel');//删除品牌
 Route::any('/brandAdd','ShoporderController@brandAdd');//添加品牌页面
 Route::any('/brandAdd_do','ShoporderController@brandAdd_do');//添加品牌方法
 Route::any('/discountUpdate','ShoporderController@discountUpdate');//优惠券修改
+Route::any('/wareShow','ShoporderController@wareShow');
+Route::any('/orderShow','ShopOrder@orderShow');
+Route::any('/orderShow1','ShopOrder@orderShow1');
+Route::any('/orderBuyer','ShopOrder@orderBuyer');
+Route::any('/buyerUpdate','ShopOrder@buyerUpdate');
+Route::any('/orderInfo','ShopOrder@orderInfo');
+Route::any('/orderLike','ShopOrder@orderLike');
+Route::any('/orderDiscount','ShopOrder@orderDiscount');
+Route::any('/orderAddress','ShopOrder@orderAddress');
+Route::any('/addAddress','ShopOrder@addAddress');
+Route::any('/updAddress','ShopOrder@updAddress');
+Route::any('/reply','ShopOrder@reply');
+Route::any('/updateAddress','ShopOrder@updateAddress');

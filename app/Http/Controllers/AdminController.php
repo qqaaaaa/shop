@@ -8,6 +8,8 @@ use App\Models\RolePower;
 use App\Models\Power;
 use App\Models\Opinion;
 use App\Models\ReplyMsg;
+use App\Models\Comment;
+use App\Models\WareHouse;
 
 Class AdminController{
 
@@ -18,7 +20,8 @@ Class AdminController{
     }
     //渲染添加页面
     public function addAdmin(){
-        return view('Admin/addAdmin');
+        $name = session('userid')['name'];
+        return view('Admin/addAdmin',['name'=>$name,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
     }
     //添加的方法
     public function doAddAdmin(){
@@ -41,7 +44,7 @@ Class AdminController{
     //管理员列表
     public function adminList(){
         $res = Admin::all();
-        return view('Admin/adminList',['adminList'=>$res]);
+        return view('Admin/adminList',['adminList'=>$res,'name'=>session('userid')['name'],'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
     }
     //删除管理员
     public function delAdmin(){
@@ -59,7 +62,8 @@ Class AdminController{
         $info = $obj->where('id',$id)->get()->toArray();
         $roleObj = new Role();
         $roleInfo = $roleObj->all()->toArray();
-        return view('Admin/adminInfo',['adminInfo'=>$info[0],'roleInfo'=>$roleInfo]);
+        $name = session('userid')['name'];
+        return view('Admin/adminInfo',['adminInfo'=>$info[0],'roleInfo'=>$roleInfo,'name'=>$name,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
     }
     //修改管理员信息
     public function doUpdAdmin(){
@@ -81,7 +85,8 @@ Class AdminController{
     public function addRole(){
         $power = Power::all()->toArray();
         $admin = Admin::where('r_id',null)->get()->toArray();
-        return view('Admin/addRole',['power'=>$power,'admin'=>$admin]);
+        $name = session('userid')['name'];
+        return view('Admin/addRole',['power'=>$power,'admin'=>$admin,'name'=>$name,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
     }
     //添加管理员角色
     public function doAddRole(){
@@ -111,7 +116,8 @@ Class AdminController{
         $allRole=Role::with(['rolepower'=>function($rolepower){$rolepower->with(['power']);}])->get()->toArray();
 //        $allRole = RolePower::with('power')->get()->toArray();
 //        var_dump($allRole);die;
-        return view('Admin/roleList',['allRole'=>$allRole]);
+        $name = session('userid')['name'];
+        return view('Admin/roleList',['allRole'=>$allRole,'name'=>$name,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
     }
     //删除角色
     public function delRole(){
@@ -140,9 +146,9 @@ Class AdminController{
     //修改角色
     public function updRole(){
         $name = $_GET['name'];
-
         $power = Power::get(['id','name'])->toArray();
-        return view('Admin/updRole',['roleName'=>$name,'power'=>$power]);
+        $adminName = session('userid')['name'];
+        return view('Admin/updRole',['roleName'=>$name,'power'=>$power,'name'=>$adminName,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
     }
     //执行修改操作
     public function doUpdRole(){
@@ -181,12 +187,14 @@ Class AdminController{
     //获取用户意见
     public function getOpinion(){
         $opinion = Opinion::paginate(10);
-        return view('Admin/opinion',['opinion'=>$opinion]);
+        $name = session('userid')['name'];
+        return view('Admin/opinion',['opinion'=>$opinion,'name'=>$name,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
     }
     //渲染回复消息页面
     public function replyUser(){
         $user = $_GET['user'];
-        return view('Admin/replyUser',['name'=>$user]);
+        $name = session('userid')['name'];
+        return view('Admin/replyUser',['username'=>$user,'name'=>$name,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
     }
     //回复消息
     public function doReply(){
@@ -199,5 +207,73 @@ Class AdminController{
             echo "<script>alert('回复失败！');location.href='getOpinion'</script>";
         }
         echo "<script>alert('回复成功！');location.href='getOpinion'</script>";
+    }
+    //商品评论审核
+    public function comment(){
+        $comment = Comment::all()->toArray();
+        $name = session('userid')['name'];
+        return view('Admin/comment',['comment'=>$comment,'name'=>$name,'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
+    }
+    //评论通过
+    public function pass(){
+        $id = $_POST['id'];
+        $comment = Comment::find($id);
+        $comment->status = 1;
+        $comment->pass_status = 1;
+        $res = $comment->save();
+        if($res){
+            return json_encode(['code'=>1,'message'=>'审核成功']);
+        }
+        return json_encode(['code'=>0,'message'=>'审核失败']);
+    }
+    //评论不通过
+    public function noPass(){
+        $id = $_POST['id'];
+        $comment = Comment::find($id);
+        $comment->status = 1;
+        $comment->pass_status = 0;
+        $res = $comment->save();
+        if($res){
+            return json_encode(['code'=>1,'message'=>'审核成功']);
+        }
+        return json_encode(['code'=>0,'message'=>'审核失败']);
+    }
+    //渲染仓库添加页面
+    public function wareHouse(){
+        return view('Admin/wareHouse',['name'=>session('userid')['name'],'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
+    }
+    //添加仓库
+    public function addWareHouse(){
+        $whName = $_POST['wh_name'];
+        $whNumber = $_POST['wh_number'];
+        $whCity = $_POST['wh_city'];
+        $whFcity = $_POST['wh_fcity'];
+        $whStatus = $_POST['wh_status'];
+        $obj = new WareHouse();
+        $obj->wh_name = $whName;
+        $obj->wh_number = $whNumber;
+        $obj->wh_status = $whStatus;
+        $obj->wh_city = $whCity;
+        $obj->wh_fcity = $whFcity;
+        $obj->save();
+        echo "<script>location.href='wareHouseList'</script>";
+    }
+    //仓库列表
+    public function wareHouseList(){
+        $data = WareHouse::all()->toArray();
+        return view('Admin/wareHouseList',['data'=>$data,'name'=>session('userid')['name'],'array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2']]);
+    }
+    //删除仓库
+    public function delWareHouse(){
+        $id = $_POST['id'];
+        $res = WareHouse::destroy($id);
+        if($res){
+            return json_encode(['code'=>1,'message'=>'删除成功']);
+        }else{
+            return json_encode(['code'=>0,'message'=>'删除失败']);
+        }
+    }
+    public function updWareHouse(){
+        
     }
 }

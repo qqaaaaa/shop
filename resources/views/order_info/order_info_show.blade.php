@@ -1,4 +1,4 @@
-@include('order_info.header')
+@include('News.header')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
@@ -39,7 +39,7 @@
    <td><?php echo $val->pay_name?></td>
    <td><?php echo $val->pay_change?></td>
    <td><?php echo $val->pay_time?></td>
-   <td><form action="trade_status" method="post">{{ csrf_field() }}<input type="hidden" value="<?php echo $val->order_number?>" name="id"> <button type="submit" class="btn btn-info" style="float:left;">订单状态详情</button></form><form action="trade_status" method="post">{{ csrf_field() }}<input type="hidden" value="<?php echo $val->order_number?>" name="id"> <button type="submit" class="btn btn-danger">订单用户详情</button></form></td>
+   <td><form action="trade_status" method="post">{{ csrf_field() }}<input type="hidden" value="<?php echo $val->order_number?>" name="id"> <button type="submit" class="btn btn-info" style="float:left;">订单状态详情</button></form></td>
  </tr>
 
  @endforeach
@@ -70,6 +70,8 @@ $(document).on("click","#search",function(){
       $.each(msg,function(k,v){
          console.log(v.order_id);
          str = '<tr><td>'+v.order_id+'</td><td>'+v.order_number+'</td><td>'+v.buyer_name+'</td><td>'+v.trade_status+'</td><td>'+v.pay_status+'</td><td>'+v.order_amount+'</td><td>'+v.pay_amount+'</td><td>'+v.pay_name+'</td><td>'+v.pay_time+'</td><td>'+v.pay_change+'</td><td><a href="trade_status?id='+v.order_number+'">订单状态详情</a></td></tr>';
+
+         str = '<tr><td>'+v.order_id+'</td><td>'+v.order_number+'</td><td>'+v.buyer_name+'</td><td>'+v.order_amount+'</td><td>'+v.pay_amount+'</td><td>'+v.pay_name+'</td><td>'+v.pay_change+'</td><td>'+v.pay_time+'</td><td><form action="trade_status" method="post">{{ csrf_field() }}<input type="hidden" value="'+v.order_number+'" name="id"> <button type="submit" class="btn btn-info" style="float:left;">订单状态详情</button></form></td></tr>'
       })
       $("#content").html(str);
    }
@@ -77,4 +79,4 @@ $(document).on("click","#search",function(){
  })
 })
 </script>
-@include('order_info.footer')
+@include('News.footer')

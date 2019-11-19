@@ -1,5 +1,6 @@
 <?php
 
+
 function getTree($res,$pid=0,$level=1){
     //声明静态数组避免递归多次时多次声明导致数组覆盖
     static $arr = [];
@@ -25,3 +26,4 @@ function jsonType($code,$msg,$data){
     $arr['data'] = $data;
     return  json_encode($arr);die;
 }
+

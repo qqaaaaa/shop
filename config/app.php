@@ -133,12 +133,14 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    
 
     'providers' => [
 
         /*
          * Laravel Framework Service Providers...
          */
+        
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -189,7 +191,9 @@ return [
     */
 
     'aliases' => [
-
+        
+        // 'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+        // 'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -227,5 +231,10 @@ return [
         'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
 
     ],
+// auth('api')->refresh();
+// // 用 JWTAuth Facade
+// JWTAuth::parseToken()->refresh();
+
+
 
 ];
