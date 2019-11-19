@@ -44,6 +44,20 @@ Route::any('doAddRole','AdminController@doAddRole');
 Route::any('roleList','AdminController@roleList');
 //删除角色
 Route::any('delRole','AdminController@delRole');
+//渲染评论
+Route::any('comment','AdminController@comment');
+//评论通过
+Route::any('pass','AdminController@pass');
+//评论不通过
+Route::any('noPass','AdminController@noPass');
+//渲染添加仓库页面
+Route::any('wareHouse','AdminController@wareHouse');
+//添加仓库
+Route::any('addWareHouse','AdminController@addWareHouse');
+//仓库列表
+Route::any('wareHouseList','AdminController@wareHouseList');
+//删除仓库
+Route::any('delWareHouse','AdminController@delWareHouse');
 
 //商品列表
 Route::any('property','IndexController@property');

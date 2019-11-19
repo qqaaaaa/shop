@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>后台管理系统</title>
+ <meta name="csrf-token" content="{{ csrf_token() }}">
+ <title>后台管理系统</title>
 <meta name="author" content="DeathGhost" />
 <link rel="stylesheet" type="text/css" href="../../xgreen/css/style.css" />
 <!--[if lt IE 9]>
