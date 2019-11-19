@@ -58,12 +58,12 @@
    <dl>
     <dt>商品管理</dt>
     <dl>
-       <dd><a href="http://www.shop.com/property" class="active">属性列表</a></dd>
+       <dd><a href="http://www.shop.com/property">属性列表</a></dd>
        <dd><a href="http://www.shop.com/propertyAdd">属性添加</a></dd>
        <dd><a href="http://www.shop.com/classifyAdd">分类添加</a></dd>
        <dd><a href="http://www.shop.com/classifyShow">分类列表</a></dd>
        <dd><a href="http://www.shop.com/productAdd">商品添加</a></dd>
-       <dd><a href="http://www.shop.com/productShow">商品列表</a></dd>
+       <dd><a href="http://www.shop.com/productShow" class="active">商品列表</a></dd>
     </dl>
    </dl>
   </li>
@@ -72,28 +72,36 @@
 </div>
 <center>
   <div class="container" style="width:800px;">
-  <h2>属性列表</h2> 
+  <h2>商品列表</h2>         
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>属性名称</th>
-        <th>属性分类</th>
-        <th>是否展示</th>
+        <th>商品名称</th>
+        <th>商品简介</th>
+        <th>单价</th>
+        <th>上下架</th>
+        <th>库存</th>
+        <th>是否是礼物</th>
+        <th>图片</th>
+        <th>分类id</th>
+        <th>品牌id</th>
         <th>操作</th>
-        <th>属性值管理</th>
+        <th>sku</th>
       </tr>
     </thead>
     <?php foreach ($res as $key => $v): ?>
       <tr>
-        <td><?php echo $v['proname']; ?></td>
+        <td><?php echo $v['pstore']; ?></td>
+        <td><?php echo $v['intro']; ?></td>
+        <td><?php echo $v['monry']; ?></td>
+        <td><?php echo $v['status']; ?></td>
+        <td><?php echo $v['num']; ?></td>
+        <td><?php echo $v['gift']; ?></td>
+        <td><?php echo $v['image']; ?></td>
         <td><?php echo $v['c_id']; ?></td>
-        @if($v['deny'] == 1)
-        <td>是</td>
-        @else
-        <td>否</td>
-        @endif
-        <td><a href="propertyUpd?id=<?php echo $v['id']?>">修改</a><a href="propertyDel?id=<?php echo $v['id']?>">删除</a></td>
-        <td><a href="abilityShow?id=<?php echo $v['id']?>">列表</a> <a href="abilityAdd?id=<?php echo $v['id']?>">添加</a></td>
+        <td><?php echo $v['p_id']; ?></td>
+        <td><a href="productUpd?id=<?php echo $v['id']?>">编辑</a><a href="productDel?id=<?php echo $v['id']?>">删除</a></td>
+        <td><a href="proSku?c_id=<?php echo $v['c_id'];?>&id=<?php echo $v['id'];?>">生成sku</a></td>
       </tr>
     <?php endforeach ?>
 </table>
@@ -106,4 +114,5 @@
   $('dt').click(function(){
     $(this).next().toggle('dl')
   })
+  
 </script>

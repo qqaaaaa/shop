@@ -16,6 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::get('getCar','CarController@getCar');
 Route::get('delCar','CarController@delCar');
 Route::post('addOrder','CarController@addOrder');
+
+Route::get('classify','ClassifyController@index');
+Route::get('collect','ClassifyController@collect');
+
