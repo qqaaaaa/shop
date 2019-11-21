@@ -97,7 +97,7 @@
         <td><?php echo $v['status']; ?></td>
         <td><?php echo $v['num']; ?></td>
         <td><?php echo $v['gift']; ?></td>
-        <td></td>
+        <td><img src="<?php echo $v['image']?>" style="width: 50px;height: 50px" alt=""></td>
         <td><?php echo $v['c_id']; ?></td>
         <td><?php echo $v['p_id']; ?></td>
         <td><a href="productUpd?id=<?php echo $v['id']?>">编辑</a><a href="productDel?id=<?php echo $v['id']?>">删除</a></td>

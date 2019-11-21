@@ -7,6 +7,9 @@ use Request;
 use App\Models\Classify;
 use App\Models\Collect;
 use App\Models\Product;
+use App\Models\Images;
+use App\Models\Ability;
+
 
 
 class ClassifyController extends Controller
@@ -17,6 +20,7 @@ class ClassifyController extends Controller
 //        $res = Classify::where('pid',$pid)->get()->toArray();
         $res = Classify::get()->toArray();
         $data = getTree($res);
+
 //        var_dump($data);die;
         $code = 1;
         $msg = '请求成功';
@@ -26,7 +30,7 @@ class ClassifyController extends Controller
 
     public function clas(){
         $pid = Input::get('id');
-        $res = Classify::where('pid',$pid)->get()->toArray();
+        $res = Product::where('c_id',$pid)->get()->toArray();
         $code = 1;
         $msg = '请求成功';
         $data = $res;
@@ -61,9 +65,36 @@ class ClassifyController extends Controller
         }
     }
 
+    public function classifyGoods(){
+        $id = Input::get('id');
+        $data = Product::where('c_id',$id)->get()->toArray();
+        $code = 1;
+        $msg = '请求成功';
+        $data = $data;
+        echo jsonType($code,$msg,$data);die;
+    }
+
     public function details(){
         $id = Input::get('id');
-        $data = Product::where('id',$id)->find()->toAarray();
+        $data = Product::find($id);
+        $code = 1;
+        $msg = '请求成功';
+        $data = $data;
+        echo jsonType($code,$msg,$data);die;
+    }
+
+    public function images(){
+        $id = Input::get('id');
+        $data = Images::where('p_id',$id)->get()->toArray();
+        $code = 1;
+        $msg = '请求成功';
+        $data = $data;
+        echo jsonType($code,$msg,$data);die;
+    }
+
+    public function ability(){
+        $id = Input::get('c_id');
+        $data = Ability::where('c_id',$id)->get()->toArray();
         $code = 1;
         $msg = '请求成功';
         $data = $data;

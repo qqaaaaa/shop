@@ -24,8 +24,12 @@ Route::get('delCar','CarController@delCar');
 Route::post('addOrder','CarController@addOrder');
 
 Route::get('classify','ClassifyController@index');
+Route::get('classifyGoods','ClassifyController@classifyGoods');
+Route::get('images','ClassifyController@images');
+Route::get('ability','ClassifyController@ability');
 Route::get('clas','ClassifyController@clas');
 Route::get('collect','ClassifyController@collect');
+Route::get('details','ClassifyController@details');
 
 
 Route::group([

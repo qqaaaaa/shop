@@ -85,7 +85,6 @@ class IndexController extends Controller
 			$re['msg'] = '修改完成';
 			echo json_encode($re);die;
 		}
-
 	}
 
 	public function classifyDel(){
@@ -113,7 +112,6 @@ class IndexController extends Controller
 
 	public function propertyUpdok(){
 		$data = [
-
 			'proname'=>Input::post('proname'),
 			'classify'=>Input::post('classify'),
 			'deny'=>Input::post('deny'),
@@ -153,7 +151,6 @@ class IndexController extends Controller
 			$re['msg'] = '添加完成';
 			echo json_encode($re);die;
 		}
-
 	}
 
 	public function abilityUpd(){
@@ -164,7 +161,6 @@ class IndexController extends Controller
 
 	public function abilityUpdok(){
 		$data = [
-
 			'ability'=>Input::post('ability'),
 		];
 		$id = Input::post('id');
@@ -239,7 +235,6 @@ class IndexController extends Controller
 		if($res){
 			echo "<script>alert('修改成功');location.href='productShow'</script>";die;
 		}
-
 	}
 
 	public function productShow(){
@@ -275,7 +270,6 @@ class IndexController extends Controller
 				//开始递归，查找父id为该节点id的节点，级别为原级别+1
 				$this->getTree($res,$value['id'],$level+1);
 			}
-
 		}
 		return $arr;
 	}
