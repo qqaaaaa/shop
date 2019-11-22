@@ -21,13 +21,11 @@ class ShopOrder extends Controller{
 	}
 	//个人信息展示
     public function buyerUpdate(){
-    	$name = $_POST['name'];
-        $email = $_POST['email'];
-        $pwd = $_POST['pwd'];
-        $header = $_POST['header'];
-        $age = $_POST['age'];
-        $birthday = $_POST['birthday'];
-        $res = Buyer::where('buyer_name',$name)->update(['buyer_name'=>$name,'buyer_email'=>$email,'buyer_pwd'=>$pwd,'buyer_header'=>$header,'buyer_age'=>$age,'buyer_birthday'=>$birthday]);
+    	$name = $_GET['name'];
+        $email = $_GET['email'];
+        $pwd = $_GET['pwd'];
+        $birthday = $_GET['birthday'];
+        $res = Buyer::where('buyer_name',$name)->update(['buyer_name'=>$name,'buyer_email'=>$email,'buyer_pwd'=>$pwd,'buyer_birthday'=>$birthday]);
          
          if($res){
          	echo "1";
@@ -87,19 +85,25 @@ class ShopOrder extends Controller{
          $id =  $value['buyer_id'];
      }
      $res = Orderaddress::where('buyer_id',$id)->get()->toArray();
-     var_dump($res);
+     echo json_encode($res);
    }
    //地址管理_我的地址列表
    
    public function addAddress(){
-   	$name = $_POST['name'];
-   	$phone = $_POST['phone'];
-   	$address = $_POST['address'];
-   	$order_number = $_POST['order_number'];
+    $names = "张三";
+      $res = Orderbuy::where('buyer_name',$names)->get()->toArray();
+      $id = '';
+     foreach ($res as $key => $value) {
+         $id =  $value['buyer_id'];
+     }
+   	$name = $_GET['name'];
+   	$phone = $_GET['phone'];
+   	$address = $_GET['address'];
    	$res = [];
    	$res['consignee_name'] = $name;
    	$res['consignee_phone'] = $phone;
-   	$res['consignee_address'] = $address;
+   	$res['user_address'] = $address;
+    $res['buyer_id'] = $id;
    	$ress = Orderaddress::insert($res);
    	if($ress){
    		echo 1;
@@ -142,7 +146,19 @@ class ShopOrder extends Controller{
         echo json_encode($guanzhu);
    }
    //消息未读提示
+   public function replya(){
+    $name = "张三";
+     $status = "1";
+   $res = ReplyMsg::where('user_name',$name)->where('status',0)->get()->toArray();
+    foreach ($res as $key => $value) {
+          ReplyMsg::where('id',$value['id'])->update(['status'=>'1']);
+
+        }
+    echo json_encode($res);
+   
+   }
  
 }
+
 
 ?>
