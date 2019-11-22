@@ -47,7 +47,7 @@ Route::group([
 	 Route::post('login', 'ApiController@login');
 	  Route::post('mailBox', 'ApiController@mailBox');
     Route::any('register', 'ApiController@register');
-    Route::post('classify', 'ApiController@classify');
+    Route::get('classify', 'ApiController@classify');
     Route::post('product', 'ApiController@product');
 
     Route::any('logout', 'ApiController@logout');

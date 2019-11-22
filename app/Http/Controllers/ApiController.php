@@ -20,7 +20,7 @@ class ApiController extends Controller {
 		$pwd=$_GET['password'];
 		$menu = Buyer::where('buyer_name',$name)->get()->toArray();
 		if ($menu=='') {
-			return success_json(2,'失败',[]);
+			return json_encode(['code'=>2,'msg'=>'失败']);
 		}
 		// 		//测试和官网是否匹配begin
 	// print_r($menu['0']['buyer_id']);die;
@@ -87,11 +87,11 @@ class ApiController extends Controller {
 	}
 	public function classify(){
 		$menu = Classify::limit(4)->get()->toArray();
-		return success_json(0,'成功',$menu);
+		return json_encode(['code'=>0,'msg'=>'成功','data'=>$menu]);
 	}
 	public function product(){
 		$menu = Product::limit(6)->get()->toArray();
-		return success_json(0,'成功',$menu);
+        return json_encode(['code'=>0,'msg'=>'成功','data'=>$menu]);
 	}
 	
 }
