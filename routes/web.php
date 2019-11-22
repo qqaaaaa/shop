@@ -144,3 +144,4 @@ Route::any('/updAddress','ShopOrder@updAddress');
 Route::any('/reply','ShopOrder@reply');
 Route::any('/replya','ShopOrder@replya');
 Route::any('/updateAddress','ShopOrder@updateAddress');
+Route::any('/phone','ShopOrder@phone');

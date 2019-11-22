@@ -8,6 +8,9 @@ use App\Models\Orderlike;
 use App\Models\OrderAddress;
 use App\Models\Orderdiscount;
 use App\Models\ReplyMsg;
+require '../vendor/autoload.php'; 
+use Lixunguan\Yuntongxun\Sdk as Yuntongxun;
+
 class ShopOrder extends Controller{
 	public function orderShow(){
 		$res = Order::get()->toArray();
@@ -157,8 +160,20 @@ class ShopOrder extends Controller{
     echo json_encode($res);
    
    }
+   public function phone(){
+    $name = $_REQUEST['name'];
+  $abb = array('key',rand(1000,9999));
+    
+  $sdk = new Yuntongxun('8aaf07086ab0c082016ad87e89f61b47', '8aaf07086ab0c082016ad87e89971b40', '399639cb5b5a47c884fab468e326b01a');
+  
+  $sms = $sdk->sendTemplateSMS($name,$abb,1);
+  if($sms){
+    echo json_encode($abb);
+  }
+}
  
 }
+
 
 
 ?>
