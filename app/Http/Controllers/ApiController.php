@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Http\Controllers;
 use App\Models\Buyer;
 use App\Jwt;
@@ -15,8 +16,8 @@ class ApiController extends Controller {
 // echo "<br><br>";
 // var_dump($getPayload);
 // echo "<br><br>";
-		$name=$_POST['name'];
-		$pwd=$_POST['pwd'];
+		$name=$_GET['username'];
+		$pwd=$_GET['password'];
 		$menu = Buyer::where('buyer_name',$name)->get()->toArray();
 		if ($menu=='') {
 			return success_json(2,'失败',[]);
@@ -28,7 +29,7 @@ class ApiController extends Controller {
 	$payload=array('sub'=>"$id",'name'=>"$names");
 	$jwt=new Jwt();
 	$token=$jwt->getToken($payload);
-		return success_json(1,'成功',['token'=>$token]);
+		return success_json(200,'成功',['token'=>$token,'id'=>$id,'names'=>$names]);
 	}
 	public function actEmail(){
 		include "EmailController.php";
@@ -61,10 +62,14 @@ class ApiController extends Controller {
 		return success_json(0,'邮箱可用');
 	}
 	public function register(){
-		$name=$_POST['name'];
-		$pwd=$_POST['pwd'];
-		$email=$_POST['email'];
-		$birthday=$_POST['birthday'];
+		$name=$_GET['name'];
+		$pwd=$_GET['pwd'];
+		$email=$_GET['email'];
+		$menu = Buyer::where('buyer_email',$email)->get()->toArray();
+		if ($menu) {
+			return success_json(1,'邮箱已存在');
+		}
+		$birthday=$_REQUEST['birthday'];
 		$code=time()+rand(1,9999);
 		 $flight = new Buyer;        
         $flight->buyer_name = $name;  
@@ -73,11 +78,19 @@ class ApiController extends Controller {
         $flight->buyer_birthday = $birthday;    
         $flight->buyer_code = $code;     
         $flight->save();
-        return success_json(0,'注册成功');
+        $this->actEmail();
+		$emails=new Email();
+		$content="恭喜"."$name"."成功注册";
+		$res=$emails->sendMail($email,"注册成功",$content);
+        return success_json(200,'注册成功');
 		
 	}
 	public function classify(){
 		$menu = Classify::limit(4)->get()->toArray();
+		return success_json(0,'成功',$menu);
+	}
+	public function product(){
+		$menu = Product::limit(6)->get()->toArray();
 		return success_json(0,'成功',$menu);
 	}
 	
