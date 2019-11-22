@@ -16,7 +16,9 @@
         "laravel/tinker": "^1.0",
 
         "tymon/jwt-auth": "1.0.*",
-        "phpmailer/phpmailer": "^6.1"
+        "phpmailer/phpmailer": "^6.1",
+
+        "lixunguan/yuntongxun": "^1.0",
 
     },
     "require-dev": {
