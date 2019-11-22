@@ -31,7 +31,7 @@ Route::get('ability','ClassifyController@ability');
 Route::get('clas','ClassifyController@clas');
 Route::get('collect','ClassifyController@collect');
 Route::get('details','ClassifyController@details');
-
+Route::get('car','ClassifyController@car');
 
 Route::group([
 
