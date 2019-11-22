@@ -26,12 +26,13 @@ Route::group([
 	Route::any('reSetPwds', 'ApiController@reSetPwds');
 	 Route::post('login', 'ApiController@login');
 	  Route::post('mailBox', 'ApiController@mailBox');
-    Route::post('register', 'ApiController@register');
+    Route::any('register', 'ApiController@register');
     Route::post('classify', 'ApiController@classify');
+    Route::post('product', 'ApiController@product');
 
-    Route::post('logout', 'ApiController@logout');
+    Route::any('logout', 'ApiController@logout');
 
-    Route::post('refresh', 'ApiController@refresh');
+    Route::any('refresh', 'ApiController@refresh');
 
     Route::post('me', 'ApiController@me');
 
