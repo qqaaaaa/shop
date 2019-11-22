@@ -25,7 +25,12 @@ Route::get('addOrder','CarController@addOrder');
 Route::get('getAddress','CarController@getAddress');
 
 Route::get('classify','ClassifyController@index');
+Route::get('classifyGoods','ClassifyController@classifyGoods');
+Route::get('images','ClassifyController@images');
+Route::get('ability','ClassifyController@ability');
+Route::get('clas','ClassifyController@clas');
 Route::get('collect','ClassifyController@collect');
+Route::get('details','ClassifyController@details');
 
 
 Route::group([
