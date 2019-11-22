@@ -21,7 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('getCar','CarController@getCar');
 Route::get('delCar','CarController@delCar');
-Route::post('addOrder','CarController@addOrder');
+Route::get('addOrder','CarController@addOrder');
+Route::get('getAddress','CarController@getAddress');
 
 Route::get('classify','ClassifyController@index');
 Route::get('collect','ClassifyController@collect');

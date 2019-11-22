@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\OrderInfo;
-
+use App\Models\ConsigneeInfo;
+use App\Models\Orderadmin;
 
 class EmptyObj {}
 class CarController{
@@ -29,27 +30,40 @@ class CarController{
             return json_encode(['code'=>0,'message'=>'删除失败']);
         }
     }
-    
+    //获取收货地址
+    public function getAddress(){
+        $id = $_REQUEST['id'];
+        $info = ConsigneeInfo::where('buyer_id',$id)->get()->toArray();
+        return json_encode(['code'=>1,'message'=>'success','data'=>$info]);
+    }
     //确认下单
     public function addOrder(){
-        $orderNumber = $_REQUEST['orderNumber'];
+        //买家id
         $buyerId = $_REQUEST['buyerId'];
+        //总金额
         $money = $_REQUEST['money'];
-        $goodsName = $_REQUEST['goodsName'];
-        $goodsId = $_REQUEST['goodsId'];
-        $address = $_REQUEST['address'];
+        //收货地址
+        $address = $_REQUEST['shouaddr'];
+        //付款方式
+        $payType = $_REQUEST['paytype'];
+        //生成订单号
+        $orderNumber = time().rand(100000,999999);
+        //商品信息
+        $goodsId = $_REQUEST['goodsid'];
+        $goodsNum = $_REQUEST['goodsnum'];
         $obj = new OrderInfo();
         $obj->order_number = $orderNumber;
         $obj->buyer_id = $buyerId;
         $obj->order_amount = $money;
-        $obj->pay_name = $goodsName;
-        $obj->product_id = $goodsId;
-        $obj->address = $address;
-        $res = $obj->save();
-        if(!$res){
-            return json_encode(['code'=>0,'message'=>'失败']);
-        }else{
-            return json_encode(['code'=>1,'message'=>'成功']);
-        }
+        $obj->consignee_info = $address;
+        $obj->pay_change = $payType;
+        $obj->save();
+
+        $obj1 = new Orderadmin();
+        $obj1->order_number = $orderNumber;
+        $obj1->product_id = $goodsId;
+        $obj1->product_number = $goodsNum;
+        $obj1->save();
+        return json_encode(['code'=>1,'message'=>'成功']);
     }
 }
