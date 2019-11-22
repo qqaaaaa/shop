@@ -18,14 +18,14 @@ class IndexController extends Controller
 		// $res = OrderInfo::get()->toArray();
 		$res = Property::get()->toArray();
 		// print_r($res);die;
-		return view('Index/property')->with('res',$res);
+		return view('Index/property',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('res',$res);
 	}
 
 	public function propertyAdd(){
 		$res = Classify::get()->toArray();
 		$data = $this->getTree($res);
 		// var_dump($data);die;
-		return view('Index/propertyAdd')->with('data',$data);
+		return view('Index/propertyAdd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('data',$data);
 	}
 
 	public function propertyAddok(){
@@ -43,7 +43,7 @@ class IndexController extends Controller
 		$res = Classify::get()->toArray();
 		$data = $this->getTree($res);
 		// var_dump($data);die;
-		return view('Index/classifyAdd')->with('data',$data);
+		return view('Index/classifyAdd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('data',$data);
 	}
 
 	public function classifyAddok(){
@@ -60,7 +60,7 @@ class IndexController extends Controller
 	public function classifyShow(){
 		$res = Classify::get()->toArray();
 		// var_dump($res);
-		return view('Index/classifyShow')->with('res',$res);
+		return view('Index/classifyShow',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('res',$res);
 	}
 
 	public function classifyUpd(){
@@ -68,7 +68,7 @@ class IndexController extends Controller
 		$arr = Classify::find($id)->toArray();
 		$res = Classify::get()->toArray();
 		$data = $this->getTree($res);
-		return view('Index/classifyUpd')->with('arr',$arr)->with('data',$data);
+		return view('Index/classifyUpd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('arr',$arr)->with('data',$data);
 	}
 
 	public function classifyUpdok(){
@@ -107,7 +107,7 @@ class IndexController extends Controller
 		$res = Classify::get()->toArray();
 		$data = $this->getTree($res);
 		// var_dump($data);die;
-		return view('Index/propertyUpd')->with('arr',$arr)->with('data',$data);
+		return view('Index/propertyUpd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('arr',$arr)->with('data',$data);
 	}
 
 	public function propertyUpdok(){
@@ -138,7 +138,7 @@ class IndexController extends Controller
 
 	public function abilityAdd(){
 		$id = Input::get('id');
-		return view('Index/abilityAdd')->with('id',$id);
+		return view('Index/abilityAdd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('id',$id);
 	}
 
 	public function abilityAddok(){
@@ -176,14 +176,14 @@ class IndexController extends Controller
 		$id = Input::get('id');
 		$res = Ability::where('c_id',$id)->get()->toArray();
 		// var_dump($user);die;
-		return view('Index/abilityShow')->with('res',$res);
+		return view('Index/abilityShow',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('res',$res);
 	}
 
 	public function productAdd(){
 		$res = Classify::get()->toArray();
 		$data = $this->getTree($res);
 		$arr =  Brand::get()->toArray();
-		return view('Index/productAdd')->with('data',$data)->with('arr',$arr);
+		return view('Index/productAdd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('data',$data)->with('arr',$arr);
 	}
 
 	public function productAddok(){
@@ -216,7 +216,7 @@ class IndexController extends Controller
 	public function productUpd(){
 		$id = Input::get('id');
 		$arr = Product::find($id)->toArray();
-		return view('Index/productUpd')->with('arr',$arr)->with('id',$id);
+		return view('Index/productUpd',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('arr',$arr)->with('id',$id);
 	}
 
 	public function productUpdok(){
@@ -240,7 +240,7 @@ class IndexController extends Controller
 	public function productShow(){
 		$res = Product::get()->toArray();
 		// var_dump($res);die;
-		return view('Index/productShow')->with('res',$res);
+		return view('Index/productShow',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('res',$res);
 	}
 
 	public function proSku(){
@@ -248,7 +248,7 @@ class IndexController extends Controller
 		$c_id = Input::get('c_id');
 		$res = Ability::where('c_id',$c_id)->get()->toArray();
 		// var_dump($res);die;
-		return view('Index/proSku')->with('res',$res)->with('id',$id);
+		return view('Index/proSku',['array_1'=>session('userid')['arr1'],'array_2'=>session('userid')['arr2'],'name'=>session('userid')['name']])->with('res',$res)->with('id',$id);
 	}
 
 	/*

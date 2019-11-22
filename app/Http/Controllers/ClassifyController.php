@@ -9,6 +9,8 @@ use App\Models\Collect;
 use App\Models\Product;
 use App\Models\Images;
 use App\Models\Ability;
+use App\Models\Car;
+
 
 
 
@@ -99,6 +101,25 @@ class ClassifyController extends Controller
         $msg = '请求成功';
         $data = $data;
         echo jsonType($code,$msg,$data);die;
+    }
+
+    public function car(){
+        $data = [
+            'goods_id' => Input::get('goods_id'),
+            'goods_name' => Input::get('goods_name'),
+            'goods_img' => Input::get('goods_img'),
+            'goods_price' => Input::get('goods_price'),
+            'goods_num' => Input::get('goods_num'),
+            'user_id' => 1,
+        ];
+        $res = new Car;
+        $user = $res->insertGetId($data);
+        if($user){
+            $code = 1;
+            $msg = '请求成功';
+            $data = [];
+            echo jsonType($code,$msg,$data);die;
+        }
     }
 
 }
